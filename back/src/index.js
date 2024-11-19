@@ -9,7 +9,7 @@ const app = express();
 
 app.use(
   cors({
-    origin: "*", // desde donde permito que le peguen a mi back
+    origin: "https://agro-ashy.vercel.app", // desde donde permito que le peguen a mi back
     credentials: true,
   })
 );
