@@ -32,7 +32,9 @@ function PotreroDetail() {
       detailPotrero(id);
     }
   };
-
+  const updateDatosPotrero = async (DatosId) => {
+    const res = await fetch();
+  };
   const sumaTotal = (p) => {
     let total = 0;
     total += p.vaca || 0;
@@ -78,6 +80,7 @@ function PotreroDetail() {
             <th className="py-2 px-4 text-left ">Observaciones</th>
             <th className="py-2 px-4 text-left ">Total</th>
             <th className="py-2 px-4 text-left ">Eliminar</th>
+            <th className="py-2 px-4 text-left ">Editar</th>
           </tr>
         </thead>
 
@@ -106,6 +109,11 @@ function PotreroDetail() {
                   Eliminar
                 </button>
               </td>
+              <Link to={`/formularioEdit/${p._id}`}>
+                <td className="py-1 px-3 text-gray-700 ">
+                  <button className="text-blue-600">Editar</button>
+                </td>
+              </Link>
             </tr>
           ))}
         </tbody>

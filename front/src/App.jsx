@@ -11,6 +11,7 @@ import AgregarPotrero from "./components/AgregarPotrero";
 import LogIn from "./components/LogIn";
 import UserContextProvider from "./context/userContext";
 import PrivateRoute from "./components/PrivateRoute";
+import EditarDatos from "./components/EditarDatos";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -36,6 +37,14 @@ function App() {
               element={
                 <PrivateRoute>
                   <PonerDatos />
+                </PrivateRoute>
+              }
+            ></Route>
+            <Route
+              path="/formularioEdit/:id"
+              element={
+                <PrivateRoute>
+                  <EditarDatos />
                 </PrivateRoute>
               }
             ></Route>

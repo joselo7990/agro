@@ -1,12 +1,9 @@
-import React, { useState } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import { API_URL } from "../../config";
 
-function PonerDatos(params) {
-  let { state } = useLocation();
-
-  const navigate = useNavigate();
-
+function EditarDatos(params) {
+  const { id } = useParams();
   const [formData, setFormData] = useState({
     vaca: "",
     novillo: "",
@@ -19,8 +16,44 @@ function PonerDatos(params) {
     entradas: "",
     salidas: "",
     observaciones: "",
-    potrero: state.potrero,
+    potrero: "",
   });
+
+  const navigate = useNavigate();
+  const obtenerDatos = async () => {
+    try {
+      const response = await fetch(API_URL + `/datos/id/${id}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      const data = await response.json();
+      console.log(data);
+      setFormData({
+        vaca: data.vaca,
+        novillo: data.novillo,
+        terneros: data.terneros,
+        toros: data.toros,
+        muertes: data.muertes,
+        // nacimientos: "",
+        sanidad: data.sanidad,
+        ventas: data.ventas,
+        entradas: data.entradas,
+        salidas: data.salidas,
+        observaciones: data.observaciones,
+        potrero: data.potrero,
+      });
+      console.log(data);
+    } catch (error) {
+      console.error("Error en el llamado a la API:", error);
+    }
+  };
+  useEffect(() => {
+    obtenerDatos();
+  }, []);
+
   // Manejar los cambios en el formulario
   const handleChange = (e) => {
     setFormData({
@@ -31,8 +64,8 @@ function PonerDatos(params) {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    fetch(API_URL + "/datos", {
-      method: "POST",
+    fetch(API_URL + `/datos/${id}`, {
+      method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
@@ -40,22 +73,7 @@ function PonerDatos(params) {
     })
       .then((response) => response.json())
       .then((data) => {
-        navigate(`/potreroDetail/${state.potrero}`);
-        // Aquí puedes manejar la respuesta, como limpiar el formulario
-        // setFormData({
-        //   vaca: "",
-        //   novillo: "",
-        //   terneros: "",
-        //   toros: "",
-        //   muertes: "",
-        //   // nacimientos: "",
-        //   sanidad: "",
-        //   ventas: "",
-        //   entradas: "",
-        //   salidas: "",
-        //   observaciones: "",
-        //   potrero: state.potrero,
-        // });
+        navigate(`/potreroDetail/${formData.potrero}`);
       })
       .catch((error) => console.error("Error al enviar los datos:", error));
   };
@@ -68,7 +86,7 @@ function PonerDatos(params) {
           className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md"
         >
           <h2 className="text-2xl font-bold text-center mb-6 text-green-600">
-            Registro Datos Potrero
+            Editar Datos Potrero
           </h2>
 
           <div className="mb-4">
@@ -221,8 +239,8 @@ function PonerDatos(params) {
             <input
               type="text"
               name="potrero"
-              value={state.potrero}
               disabled
+              value={formData.potrero}
               onChange={handleChange}
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
               placeholder="Ingresa nombre del potrero..."
@@ -249,4 +267,4 @@ function PonerDatos(params) {
   );
 }
 
-export default PonerDatos;
+export default EditarDatos;
