@@ -83,6 +83,7 @@ export const updateDatosPotrero = async (req, res) => {
     potrero,
     entradas,
     salidas,
+    ventas,
   } = req.body;
 
   try {
@@ -102,6 +103,7 @@ export const updateDatosPotrero = async (req, res) => {
         potrero,
         entradas,
         salidas,
+        ventas,
       },
       { new: true } // Esto devuelve el documento actualizado
     );
