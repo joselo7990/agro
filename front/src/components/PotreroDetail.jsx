@@ -136,7 +136,7 @@ function PotreroDetail() {
             <p className="text-gray-700">Vacas: {p.vaca}</p>
             <p className="text-gray-700">Novillos: {p.novillo}</p>
             <p className="text-gray-700">Terneros: {p.terneros}</p>
-            <p className="text-gray-700">Terneros: {p.toros}</p>
+            <p className="text-gray-700">Toros: {p.toros}</p>
             <p className="text-gray-700">Muertes: {p.muertes}</p>
             <p className="text-gray-700">Sanidad: {p.sanidad}</p>
             <p className="text-gray-700">Entradas: {p.entradas}</p>
