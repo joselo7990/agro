@@ -40,6 +40,7 @@ function PotreroDetail() {
     total += p.vaca || 0;
     total += p.novillo || 0;
     total += p.terneros || 0;
+    total += p.toros || 0;
     total -= p.muertes || 0;
     total += p.entradas || 0;
     total -= p.salidas || 0;
@@ -72,6 +73,7 @@ function PotreroDetail() {
             <th className="py-2 px-4 text-left ">Vacas</th>
             <th className="py-2 px-4 text-left ">Novillos</th>
             <th className="py-2 px-4 text-left ">Terneros</th>
+            <th className="py-2 px-4 text-left ">Toros</th>
             <th className="py-2 px-4 text-left ">Muertes</th>
             <th className="py-2 px-4 text-left ">Sanidad</th>
             <th className="py-2 px-4 text-left ">Entradas</th>
@@ -94,6 +96,7 @@ function PotreroDetail() {
               <td className="py-1 px-3 text-gray-700 ">{p.vaca}</td>
               <td className="py-1 px-3 text-gray-700 ">{p.novillo}</td>
               <td className="py-1 px-3 text-gray-700 ">{p.terneros}</td>
+              <td className="py-1 px-3 text-gray-700 ">{p.toros}</td>
               <td className="py-1 px-3 text-gray-700 ">{p.muertes}</td>
               <td className="py-1 px-3 text-gray-700 ">{p.sanidad}</td>
               <td className="py-1 px-3 text-gray-700 ">{p.entradas}</td>
@@ -133,6 +136,7 @@ function PotreroDetail() {
             <p className="text-gray-700">Vacas: {p.vaca}</p>
             <p className="text-gray-700">Novillos: {p.novillo}</p>
             <p className="text-gray-700">Terneros: {p.terneros}</p>
+            <p className="text-gray-700">Terneros: {p.toros}</p>
             <p className="text-gray-700">Muertes: {p.muertes}</p>
             <p className="text-gray-700">Sanidad: {p.sanidad}</p>
             <p className="text-gray-700">Entradas: {p.entradas}</p>
