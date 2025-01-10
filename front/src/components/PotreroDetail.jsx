@@ -153,7 +153,7 @@ function PotreroDetail() {
             <Link to={`/formularioEdit/${p._id}`}>
               <button
                 className="mt-3 p-2 bg-red-100 hover:bg-red-200 text-blue-600 rounded-full w-full flex items-center justify-center"
-                onClick={() => deleteDatosPotrero(p._id)}
+                onClick={() => updateDatosPotrero(p._id)}
               >
                 Editar
               </button>
