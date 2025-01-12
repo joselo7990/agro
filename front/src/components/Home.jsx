@@ -19,8 +19,17 @@ function Home(params) {
       });
 
       const data = await response.json();
+      // Ordenar los datos por "dueño"
+      const datosOrdenados = data.sort((a, b) => {
+        if (a.dueño < b.dueño) return -1;
+        if (a.dueño > b.dueño) return 1;
+        return 0;
+      });
 
-      setDatos(data);
+      // Actualizar el estado con los datos ordenados
+      setDatos(datosOrdenados);
+
+      // setDatos(data);
     } catch (error) {
       console.error("Error en el llamado a la API:", error);
     }
