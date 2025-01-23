@@ -12,7 +12,8 @@ import LogIn from "./components/LogIn";
 import UserContextProvider from "./context/userContext";
 import PrivateRoute from "./components/PrivateRoute";
 import EditarDatos from "./components/EditarDatos";
-
+import Actividades from "./components/Actividades";
+import DetalleMes from "./components/DetalleMes";
 function App() {
   const [count, setCount] = useState(0);
 
@@ -61,6 +62,22 @@ function App() {
               element={
                 <PrivateRoute>
                   <AgregarPotrero />
+                </PrivateRoute>
+              }
+            ></Route>
+            <Route
+              path="/actividades"
+              element={
+                <PrivateRoute>
+                  <Actividades />
+                </PrivateRoute>
+              }
+            ></Route>
+            <Route
+              path="/mes/:nombreMes"
+              element={
+                <PrivateRoute>
+                  <DetalleMes />
                 </PrivateRoute>
               }
             ></Route>

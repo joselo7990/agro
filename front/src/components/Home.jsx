@@ -51,6 +51,12 @@ function Home(params) {
   return (
     <div>
       <div className="relative inline-block text-left"></div>
+      <Link to="/actividades">
+        <button className="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md transition duration-200 ease-in-out transform hover:scale-105 mx-auto block mt-5 mb-5">
+          Actividades
+        </button>
+      </Link>
+
       <Table datos={datos} handleDelete={handleDelete}></Table>
 
       <Link to="/agregarPotrero">
