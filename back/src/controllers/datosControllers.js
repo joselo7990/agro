@@ -24,7 +24,6 @@ export const getDatosPotrerosbyName = async (req, res) => {
   }
 };
 export const createDatosPotrero = async (req, res) => {
-  console.log("probando");
   const {
     fecha,
     vaca,

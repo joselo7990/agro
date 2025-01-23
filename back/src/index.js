@@ -3,13 +3,14 @@ import connectDB from "./db.config.js";
 import potreroRouter from "./routes/potrerosRoutes.js";
 import datosRouter from "./routes/datosPotrero.js";
 import userRouter from "./routes/userRoutes.js";
+import activadesRouter from "./routes/actividades.js";
 import cors from "cors";
 
 const app = express();
 
 app.use(
   cors({
-    origin: "https://agro-ashy.vercel.app", // "http://localhost:5173" // desde donde permito que le peguen a mi back
+    origin: "https://agro-ashy.vercel.app", // "http://localhost:5173", //  ,  desde donde permito que le peguen a mi back
     credentials: true,
   })
 );
@@ -19,6 +20,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/potrero", potreroRouter);
 app.use("/datos", datosRouter);
 app.use("/user", userRouter);
+app.use("/actividades", activadesRouter);
 connectDB()
   .then(() => {
     app.listen(8080, () => {
