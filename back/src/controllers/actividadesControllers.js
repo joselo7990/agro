@@ -181,6 +181,26 @@ const actividadesMensuales = [
   },
 ];
 
+const insertarActividadesPredefinidas = async () => {
+  try {
+    // Verificar si las actividades ya existen para evitar duplicados
+    const count = await Actividad.countDocuments();
+    if (count === 0) {
+      await Actividad.insertMany(actividadesMensuales);
+      console.log("Actividades predefinidas insertadas correctamente.");
+    } else {
+      console.log(
+        "Las actividades predefinidas ya existen en la base de datos."
+      );
+    }
+  } catch (error) {
+    console.error("Error al insertar actividades predefinidas:", error);
+  }
+};
+
+// Llamar a la función para insertar las actividades
+insertarActividadesPredefinidas();
+
 export const getActividades = async (req, res) => {
   try {
     const mes = req.params.mes;

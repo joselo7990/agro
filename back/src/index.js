@@ -10,7 +10,7 @@ const app = express();
 
 app.use(
   cors({
-    origin: "https://agro-ashy.vercel.app", // "http://localhost:5173", //  ,  desde donde permito que le peguen a mi back
+    origin: "https://agro-ashy.vercel.app", //"http://localhost:5173", //  ,  desde donde permito que le peguen a mi back
     credentials: true,
   })
 );
