@@ -1,21 +1,23 @@
-import { useState } from "react";
+import { useState } from "react"
 
-import "./App.css";
-import Home from "./components/Home";
-import Navbar from "./components/NavBar";
+import "./App.css"
+import Home from "./components/Home"
+import Navbar from "./components/NavBar"
 
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-import PonerDatos from "./components/PonerDatos";
-import PotreroDetail from "./components/PotreroDetail";
-import AgregarPotrero from "./components/AgregarPotrero";
-import LogIn from "./components/LogIn";
-import UserContextProvider from "./context/userContext";
-import PrivateRoute from "./components/PrivateRoute";
-import EditarDatos from "./components/EditarDatos";
-import Actividades from "./components/Actividades";
-import DetalleMes from "./components/DetalleMes";
+import { BrowserRouter, Route, Routes } from "react-router-dom"
+import PonerDatos from "./components/PonerDatos"
+import PotreroDetail from "./components/PotreroDetail"
+import AgregarPotrero from "./components/AgregarPotrero"
+import LogIn from "./components/LogIn"
+import UserContextProvider from "./context/userContext"
+import PrivateRoute from "./components/PrivateRoute"
+import EditarDatos from "./components/EditarDatos"
+import Actividades from "./components/Actividades"
+import DetalleMes from "./components/DetalleMes"
+import Stock from "./components/Stock"
+
 function App() {
-  const [count, setCount] = useState(0);
+  const [count, setCount] = useState(0)
 
   return (
     <>
@@ -74,6 +76,14 @@ function App() {
               }
             ></Route>
             <Route
+              path="/stock"
+              element={
+                <PrivateRoute>
+                  <Stock />
+                </PrivateRoute>
+              }
+            ></Route>
+            <Route
               path="/mes/:nombreMes"
               element={
                 <PrivateRoute>
@@ -85,7 +95,7 @@ function App() {
         </UserContextProvider>
       </BrowserRouter>
     </>
-  );
+  )
 }
 
-export default App;
+export default App

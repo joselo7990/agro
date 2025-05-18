@@ -1,40 +1,40 @@
-import React, { useState, useEffect } from "react";
-import { useParams, Link } from "react-router-dom";
-import { API_URL } from "../../config";
+import React, { useState, useEffect } from "react"
+import { useParams, Link } from "react-router-dom"
+import { API_URL } from "../../config"
 
 const DetalleMes = () => {
-  const { nombreMes } = useParams();
-  const [datos, setDatos] = useState(null);
-  const [actividades, setActividad] = useState("");
-  const [descripcion, setDescripcion] = useState("");
+  const { nombreMes } = useParams()
+  const [datos, setDatos] = useState(null)
+  const [actividades, setActividad] = useState("")
+  const [descripcion, setDescripcion] = useState("")
 
   const actividad = async (id) => {
     try {
-      const response = await fetch(API_URL + `/actividades/${id}`);
+      const response = await fetch(API_URL + `/actividades/${id}`)
       if (!response.ok) {
-        throw new Error("Error al obtener los datos del potrero");
+        throw new Error("Error al obtener los datos del potrero")
       }
-      const data = await response.json();
-      setDatos(data);
+      const data = await response.json()
+      setDatos(data)
     } catch (err) {
-      console.error(err);
+      console.error(err)
     }
-  };
+  }
 
   useEffect(() => {
-    actividad(nombreMes);
-  }, [nombreMes]);
+    actividad(nombreMes)
+  }, [nombreMes])
 
   const handleDelete = async (id) => {
     const res = await fetch(API_URL + `/actividades/${id}`, {
       method: "DELETE",
       headers: { "Content-Type": "application/json" },
-    });
-    if (res.status === 200) actividad(nombreMes);
-  };
+    })
+    if (res.status === 200) actividad(nombreMes)
+  }
 
   const handleSubmit = (e) => {
-    e.preventDefault();
+    e.preventDefault()
     fetch(API_URL + "/actividades", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -46,12 +46,12 @@ const DetalleMes = () => {
     })
       .then((response) => response.json())
       .then(() => {
-        actividad(nombreMes);
-        setActividad("");
-        setDescripcion("");
+        actividad(nombreMes)
+        setActividad("")
+        setDescripcion("")
       })
-      .catch((error) => console.error("Error al enviar los datos:", error));
-  };
+      .catch((error) => console.error("Error al enviar los datos:", error))
+  }
 
   return (
     <div className="p-4 bg-gray-50 min-h-screen">
@@ -69,9 +69,9 @@ const DetalleMes = () => {
         Actividades para {nombreMes}
       </h1>
 
-      {/* Tabla de actividades */}
+      {/* Tabla de actividades - visible solo en desktop */}
       <div className="overflow-x-auto">
-        <table className="w-full bg-white shadow-lg rounded-lg border-collapse">
+        <table className="hidden sm:table w-full bg-white shadow-lg rounded-lg border-collapse">
           <thead className="bg-green-600 text-white text-sm uppercase">
             <tr>
               <th className="py-3 px-6 text-left">Fecha</th>
@@ -101,6 +101,36 @@ const DetalleMes = () => {
             ))}
           </tbody>
         </table>
+
+        {/* Vista móvil */}
+        <div className="sm:hidden mt-5 space-y-4">
+          {datos?.map((actividad) => (
+            <div
+              key={actividad._id}
+              className="bg-white shadow-md rounded-lg p-4 border border-gray-200"
+            >
+              <p className="text-gray-700 font-semibold">
+                Fecha:{" "}
+                {actividad.fecha &&
+                  new Date(actividad.fecha).toLocaleDateString()}
+              </p>
+              <p className="text-gray-700">
+                <span className="font-semibold">Actividad:</span>{" "}
+                {actividad.nombre}
+              </p>
+              <p className="text-gray-700">
+                <span className="font-semibold">Descripción:</span>{" "}
+                {actividad.descripcion}
+              </p>
+              <button
+                onClick={() => handleDelete(actividad._id)}
+                className="mt-3 p-2 bg-red-100 hover:bg-red-200 text-red-600 rounded-full w-full flex items-center justify-center"
+              >
+                Eliminar
+              </button>
+            </div>
+          ))}
+        </div>
       </div>
 
       {/* Formulario */}
@@ -145,7 +175,7 @@ const DetalleMes = () => {
         </form>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default DetalleMes;
+export default DetalleMes

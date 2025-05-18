@@ -1,7 +1,12 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import { Link } from "react-router-dom"
+import PropTypes from "prop-types"
 
 const Table = ({ datos, handleDelete }) => {
+  const formatearFecha = (fecha) => {
+    if (!fecha) return "Sin datos"
+    return new Date(fecha).toLocaleDateString("es-AR")
+  }
+
   return (
     <div className="overflow-x-auto">
       {/* Usamos `hidden` para la tabla en dispositivos móviles */}
@@ -11,6 +16,8 @@ const Table = ({ datos, handleDelete }) => {
             <th className="py-2 px-4 text-left">Dueño</th>
             <th className="py-2 px-4 text-left">Nombre</th>
             <th className="py-2 px-4 text-left">Dimensiones</th>
+            <th className="py-2 px-4 text-left">Total Animales</th>
+            <th className="py-2 px-4 text-left">Última Actualización</th>
             <th className="py-2 px-4 text-left">Eliminar</th>
           </tr>
         </thead>
@@ -28,6 +35,12 @@ const Table = ({ datos, handleDelete }) => {
                 </Link>
               </td>
               <td className="py-1 px-3 text-gray-700">{dato.dimensiones} ha</td>
+              <td className="py-1 px-3 text-gray-700">
+                {dato.totalAnimales || 0}
+              </td>
+              <td className="py-1 px-3 text-gray-700">
+                {formatearFecha(dato.ultimaFecha)}
+              </td>
               <td>
                 <button
                   onClick={() => handleDelete(dato._id)}
@@ -73,6 +86,12 @@ const Table = ({ datos, handleDelete }) => {
               </Link>
             </p>
             <p className="text-gray-700">Dimensiones: {dato.dimensiones} ha</p>
+            <p className="text-gray-700">
+              Total Animales: {dato.totalAnimales || 0}
+            </p>
+            <p className="text-gray-700">
+              Última Actualización: {formatearFecha(dato.ultimaFecha)}
+            </p>
             <button
               onClick={() => handleDelete(dato._id)}
               className="mt-3 p-2 bg-red-100 hover:bg-red-200 text-red-600 rounded-full w-full flex items-center justify-center"
@@ -97,7 +116,21 @@ const Table = ({ datos, handleDelete }) => {
         ))}
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Table;
+Table.propTypes = {
+  datos: PropTypes.arrayOf(
+    PropTypes.shape({
+      _id: PropTypes.string.isRequired,
+      dueño: PropTypes.string.isRequired,
+      nombre: PropTypes.string.isRequired,
+      dimensiones: PropTypes.string.isRequired,
+      totalAnimales: PropTypes.number,
+      ultimaFecha: PropTypes.string,
+    })
+  ).isRequired,
+  handleDelete: PropTypes.func.isRequired,
+}
+
+export default Table

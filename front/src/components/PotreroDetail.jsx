@@ -1,55 +1,58 @@
-import React, { useState, useEffect } from "react";
-import { Link, useParams } from "react-router-dom";
-import { API_URL } from "../../config";
+import React, { useState, useEffect } from "react"
+import { Link, useParams } from "react-router-dom"
+import { API_URL } from "../../config"
 
 function PotreroDetail() {
-  const { id } = useParams();
+  const { id } = useParams()
 
-  const [potrero, setPotrero] = useState(null);
+  const [potrero, setPotrero] = useState(null)
 
   const detailPotrero = async (id) => {
     try {
-      const response = await fetch(API_URL + `/datos/${id}`);
+      const response = await fetch(API_URL + `/datos/${id}`)
       if (!response.ok) {
-        throw new Error("Error al obtener los datos del potrero");
+        throw new Error("Error al obtener los datos del potrero")
       }
-      const data = await response.json();
-      setPotrero(data);
+      const data = await response.json()
+      const sortedData = data.sort(
+        (a, b) => new Date(b.fecha) - new Date(a.fecha)
+      )
+      setPotrero(sortedData)
     } catch (err) {
-      console.error(err);
+      console.error(err)
     }
-  };
+  }
 
   useEffect(() => {
-    detailPotrero(id);
-  }, [id]);
+    detailPotrero(id)
+  }, [id])
 
   const deleteDatosPotrero = async (Datosid) => {
     const res = await fetch(API_URL + `/datos/${Datosid}`, {
       method: "DELETE",
-    });
+    })
     if (res.status === 200) {
-      detailPotrero(id);
+      detailPotrero(id)
     }
-  };
+  }
   const updateDatosPotrero = async (DatosId) => {
-    const res = await fetch();
-  };
+    const res = await fetch()
+  }
   const sumaTotal = (p) => {
-    let total = 0;
-    total += p.vaca || 0;
-    total += p.novillo || 0;
-    total += p.terneros || 0;
-    total += p.toros || 0;
-    total -= p.muertes || 0;
-    total += p.entradas || 0;
-    total -= p.salidas || 0;
-    total -= p.ventas || 0;
-    return total;
-  };
+    let total = 0
+    total += Number(p.vaca) || 0
+    total += Number(p.novillo) || 0
+    total += Number(p.terneros) || 0
+    total += Number(p.toros) || 0
+    total -= Number(p.muertes) || 0
+    total += Number(p.entradas) || 0
+    total -= Number(p.salidas) || 0
+    total -= Number(p.ventas) || 0
+    return total
+  }
 
   if (!potrero) {
-    return <p className="text-center text-gray-500">Cargando...</p>;
+    return <p className="text-center text-gray-500">Cargando...</p>
   }
 
   return (
@@ -173,7 +176,7 @@ function PotreroDetail() {
         </Link>
       </div>
     </div>
-  );
+  )
 }
 
-export default PotreroDetail;
+export default PotreroDetail
