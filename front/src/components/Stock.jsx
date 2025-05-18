@@ -8,6 +8,7 @@ function Stock() {
   const [formData, setFormData] = useState({
     tipo: "alambres",
     cantidad: "",
+    description: "",
   })
   const [itemToEdit, setItemToEdit] = useState(null)
 
@@ -67,7 +68,7 @@ function Stock() {
         obtenerStock()
         setShowForm(false)
         setItemToEdit(null)
-        setFormData({ tipo: "alambres", cantidad: "" })
+        setFormData({ tipo: "alambres", cantidad: "", description: "" })
       }
     } else {
       // Crear nuevo item
@@ -81,7 +82,7 @@ function Stock() {
       if (res.ok) {
         obtenerStock()
         setShowForm(false)
-        setFormData({ tipo: "alambres", cantidad: "" })
+        setFormData({ tipo: "alambres", cantidad: "", description: "" })
       }
     }
   }
@@ -133,13 +134,30 @@ function Stock() {
                   required
                 />
               </div>
+              <div className="mb-4">
+                <label className="block text-gray-700 text-sm font-bold mb-2">
+                  Descripción
+                </label>
+                <textarea
+                  value={formData.description}
+                  onChange={(e) =>
+                    setFormData({ ...formData, description: e.target.value })
+                  }
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  rows="3"
+                />
+              </div>
               <div className="flex justify-end gap-2">
                 <button
                   type="button"
                   onClick={() => {
                     setShowForm(false)
                     setItemToEdit(null)
-                    setFormData({ tipo: "alambres", cantidad: "" })
+                    setFormData({
+                      tipo: "alambres",
+                      cantidad: "",
+                      description: "",
+                    })
                   }}
                   className="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded"
                 >
@@ -163,6 +181,7 @@ function Stock() {
           <tr>
             <th className="py-2 px-4 text-left">Tipo</th>
             <th className="py-2 px-4 text-left">Cantidad</th>
+            <th className="py-2 px-4 text-left">Descripción</th>
             <th className="py-2 px-4 text-left">Fecha de creación</th>
             <th className="py-2 px-4 text-left">Última actualización</th>
             <th className="py-2 px-4 text-left">Acciones</th>
@@ -173,6 +192,9 @@ function Stock() {
             <tr key={item._id} className="border-b">
               <td className="py-1 px-3 text-gray-700">{item.tipo}</td>
               <td className="py-1 px-3 text-gray-700">{item.cantidad}</td>
+              <td className="py-1 px-3 text-gray-700">
+                {item.description || "-"}
+              </td>
               <td className="py-1 px-3 text-gray-700">
                 {new Date(item.createdAt).toLocaleDateString()}
               </td>
@@ -193,6 +215,7 @@ function Stock() {
                     setFormData({
                       tipo: item.tipo,
                       cantidad: item.cantidad,
+                      description: item.description || "",
                     })
                     setShowForm(true)
                   }}
@@ -215,6 +238,9 @@ function Stock() {
             <p className="text-gray-700 font-semibold">Tipo: {item.tipo}</p>
             <p className="text-gray-700">Cantidad: {item.cantidad}</p>
             <p className="text-gray-700">
+              Descripción: {item.description || "-"}
+            </p>
+            <p className="text-gray-700">
               Creado: {new Date(item.createdAt).toLocaleDateString()}
             </p>
             <p className="text-gray-700">
@@ -234,6 +260,7 @@ function Stock() {
                   setFormData({
                     tipo: item.tipo,
                     cantidad: item.cantidad,
+                    description: item.description || "",
                   })
                   setShowForm(true)
                 }}
