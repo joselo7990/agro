@@ -5,6 +5,7 @@ import { API_URL } from "../../config"
 function Stock() {
   const [stock, setStock] = useState([])
   const [showForm, setShowForm] = useState(false)
+  const [filter, setFilter] = useState("todos")
   const [formData, setFormData] = useState({
     tipo: "alambres",
     cantidad: "",
@@ -87,6 +88,11 @@ function Stock() {
     }
   }
 
+  const filteredStock = stock.filter((item) => {
+    if (filter === "todos") return true
+    return item.tipo === filter
+  })
+
   return (
     <div className="overflow-x-auto">
       <button
@@ -95,6 +101,49 @@ function Stock() {
       >
         Agregar Stock
       </button>
+
+      <div className="flex justify-center gap-2 mb-5">
+        <button
+          onClick={() => setFilter("todos")}
+          className={`px-4 py-2 rounded-lg transition duration-200 ${
+            filter === "todos"
+              ? "bg-green-500 text-white"
+              : "bg-gray-200 hover:bg-gray-300 text-gray-700"
+          }`}
+        >
+          Todos
+        </button>
+        <button
+          onClick={() => setFilter("alambres")}
+          className={`px-4 py-2 rounded-lg transition duration-200 ${
+            filter === "alambres"
+              ? "bg-green-500 text-white"
+              : "bg-gray-200 hover:bg-gray-300 text-gray-700"
+          }`}
+        >
+          Alambres
+        </button>
+        <button
+          onClick={() => setFilter("maderas")}
+          className={`px-4 py-2 rounded-lg transition duration-200 ${
+            filter === "maderas"
+              ? "bg-green-500 text-white"
+              : "bg-gray-200 hover:bg-gray-300 text-gray-700"
+          }`}
+        >
+          Maderas
+        </button>
+        <button
+          onClick={() => setFilter("sanidad")}
+          className={`px-4 py-2 rounded-lg transition duration-200 ${
+            filter === "sanidad"
+              ? "bg-green-500 text-white"
+              : "bg-gray-200 hover:bg-gray-300 text-gray-700"
+          }`}
+        >
+          Sanidad
+        </button>
+      </div>
 
       {showForm && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4">
@@ -188,7 +237,7 @@ function Stock() {
           </tr>
         </thead>
         <tbody>
-          {stock.map((item) => (
+          {filteredStock.map((item) => (
             <tr key={item._id} className="border-b">
               <td className="py-1 px-3 text-gray-700">{item.tipo}</td>
               <td className="py-1 px-3 text-gray-700">{item.cantidad}</td>
@@ -230,7 +279,7 @@ function Stock() {
 
       {/* Vista para móviles */}
       <div className="sm:hidden mt-5 space-y-4">
-        {stock.map((item) => (
+        {filteredStock.map((item) => (
           <div
             key={item._id}
             className="bg-white shadow-md rounded-lg p-4 border border-gray-200"
